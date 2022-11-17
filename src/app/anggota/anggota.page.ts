@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ApiService } from "../api.service";
+import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-anggota',
@@ -11,17 +13,33 @@ export class AnggotaPage implements OnInit {
   id_anggota: any;
   nama: any;
   password: any;
+  token: any;
   anggota: any[] = [];
   constructor(
     public _apiService: ApiService,
     private alertController: AlertController,
     public loadingController: LoadingController,
+    private authService: AuthenticationService,
+    private router: Router
   ) {
     this.getAnggota();
   }
 
   ngOnInit() {
     console.log('cek fungsi halaman event init jalan');
+  }
+  loadToken() {
+    this.token = this.authService.getData('token');
+    if (this.token != null) {
+      this.nama = this.authService.getData('username');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+  }
+  //membuat fungsi logout
+  logout() {
+    this.authService.logout(); // lempar ke authService lalu cari fungsi logout
+    this.router.navigateByUrl('/', { replaceUrl: true }); // alihkan ke halama
   }
 
   ionViewDidEnter() {
@@ -44,6 +62,7 @@ export class AnggotaPage implements OnInit {
       })
     })
   }
+
   deleteAnggota(id: any) {
     this.alertController.create({
       header: 'perhatian',

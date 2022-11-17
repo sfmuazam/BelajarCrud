@@ -10,11 +10,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule),
-    canLoad: [AuthGuard]
-  },
-  {
     path: 'anggota',
     loadChildren: () => import('./anggota/anggota.module').then( m => m.AnggotaPageModule),
     canLoad: [AuthGuard]
