@@ -1,0 +1,7 @@
+{
+  "name": "TesSIPUS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
